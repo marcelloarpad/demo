@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>昆明岗位多图表展示</title>
+  <!-- 引入 ECharts 库 -->
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.2.1/dist/echarts.min.js"></script>
+</head>
+<body>
+
+<!-- 柱状图容器 -->
+<div id="bar-chart-container" style="width: 400px; height: 300px; float: left;"></div>
+
+<!-- 饼状图容器 -->
+<div id="pie-chart-container" style="width: 400px; height: 300px; float: left;"></div>
+
+<!-- 折线图容器 -->
+<div id="line-chart-container" style="width: 800px; height: 300px; clear: both;"></div>
+
+<script>
+  // 初始化柱状图容器
+  var barChart = echarts.init(document.getElementById('bar-chart-container'));
+
+  // 柱状图配置
+  var barOption = {
+    title: {
+      text: '城市计算机行业年薪',
+      x: 'center'
+    },
+    xAxis: {
+      type: 'category',
+      data: ['昆明', '上海', '北京']
+    },
+    yAxis: {
+      type: 'value',
+      name: '年薪（万元）'
+    },
+    series: [{
+      name: '年薪',
+      type: 'bar',
+      data: [8, 12, 15]
+    }]
+  };
+
+  // 使用刚指定的配置项和数据显示柱状图。
+  barChart.setOption(barOption);
+
+
+  // 初始化饼状图容器
+  var pieChart = echarts.init(document.getElementById('pie-chart-container'));
+
+  // 饼状图配置
+  var pieOption = {
+    title: {
+      text: '城市计算机行业年薪占比',
+      x: 'center'
+    },
+    series: [{
+      name: '年薪',
+      type: 'pie',
+      radius: '55%',
+      data: [
+        { value: 8, name: '昆明' },
+        { value: 12, name: '上海' },
+        { value: 15, name: '北京' }
+      ]
+    }]
+  };
+
+  // 使用刚指定的配置项和数据显示饼状图。
+  pieChart.setOption(pieOption);
+
+
+  // 初始化折线图容器
+  var lineChart = echarts.init(document.getElementById('line-chart-container'));
+
+  // 折线图配置
+  var lineOption = {
+    title: {
+      text: '城市计算机行业年薪趋势',
+      x: 'center'
+    },
+    xAxis: {
+      type: 'category',
+      data: ['2019', '2020', '2021']
+    },
+    yAxis: {
+      type: 'value',
+      name: '年薪（万元）'
+    },
+    series: [{
+      name: '昆明',
+      type: 'line',
+      data: [7, 8, 9]
+    }, {
+      name: '上海',
+      type: 'line',
+      data: [11, 12, 13]
+    }, {
+      name: '北京',
+      type: 'line',
+      data: [14, 15, 16]
+    }]
+  };
+
+  // 使用刚指定的配置项和数据显示折线图。
+  lineChart.setOption(lineOption);
+</script>
+
+</body>
+</html>

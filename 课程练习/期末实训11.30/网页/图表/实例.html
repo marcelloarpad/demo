@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ECharts 示例</title>
+  <!-- 引入 ECharts 库 -->
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.2.1/dist/echarts.min.js"></script>
+</head>
+<body>
+
+<!-- 图表容器 -->
+<div id="chart-container" style="width: 600px; height: 400px;"></div>
+
+<script>
+          // 在上面的 <script> 标签中添加这部分代码
+
+        // 初始化图表容器
+        var myChart = echarts.init(document.getElementById('chart-container'));
+
+        // 图表配置
+        var option = {
+          title: {
+            text: '城市计算机行业年薪分析',
+            x: 'center'
+          },
+          xAxis: {
+            type: 'category',
+            data: ['昆明', '上海', '北京']
+          },
+          yAxis: {
+            type: 'value',
+            name: '年薪（万元）'
+          },
+          series: [{
+            name: '年薪',
+            type: 'bar',
+            data: [8, 12, 15] // 假设这是你的年薪数据
+          }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+
+</script>
+
+</body>
+</html>

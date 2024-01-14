@@ -1,0 +1,26 @@
+https://we.51job.com/api/job/search-pc?api_key=51job&timestamp=1701336113&keyword=程序员、c\c++、网络工程师&searchType=2&function=&industry=&jobArea=250200&jobArea2=&landmark=&metro=&salary=02/03/04/05&workYear=&degree=&companyType=&companySize=&jobType=&issueDate=&sortType=0&pageNum=1&requestId=&pageSize=50&source=1&accountId=&pageCode=sou|sou|soulb
+
+https://we.51job.com/api/job/search-pc?
+api_key=51job& # 关键字 不要更改
+timestamp=1701336113& # 搜索的时间戳，从什么时候开始。以秒为单位自1970年1月1日开始
+keyword=C/C++& # 搜索的职位关键词
+searchType=2& # 搜索类型
+function=& # 未知
+industry=& # 未知
+jobArea=010000,020000,250200& # 地域代码，分别为北京、上海和昆明
+jobArea2=& # 地域代码2
+landmark=& # 未知
+metro=& # 未知
+salary=& # 薪水 （实例：02/03/04/05.... 分别代表2K-3K 3K-4.5K 4.5K-6K 6K-8K）
+workYear=& # 工作年份
+degree=& # 未知
+companyType=& # 公司类型
+companySize=& # 公司规模
+jobType=& # 工作类型
+issueDate=& # 未知
+sortType=0& # 排序方式
+pageNum=1& # 页码
+requestId=& # 未知
+pageSize=20& # 一次请求返回多少个工作岗位
+source=1& # 未知
+accountId=& # 未知

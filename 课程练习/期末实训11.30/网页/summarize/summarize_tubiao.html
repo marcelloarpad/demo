@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>上海岗位多图表展示</title>
+  <!-- 引入 ECharts 库 -->
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.2.1/dist/echarts.min.js"></script>
+</head>
+
+    <body>
+
+    <!-- 柱状图容器 -->
+    <div id="bar-chart-container" style="width: 800px; height: 300px; float: left;"></div>
+
+    <!-- 饼状图容器 -->
+    <div id="pie-chart-container" style="width: 800px; height: 300px; float: left;"></div>
+
+    <script>
+// 初始化柱状图容器
+var barChart = echarts.init(document.getElementById('bar-chart-container'));
+
+// 柱状图配置
+var barOption = {
+  title: {
+    text: '昆明、北京、上海近三年it行业平均年薪(单位：万元）',
+    x: 'center'
+  },
+  xAxis: {
+    type: 'category',
+    data: ['昆明市', '北京市', '上海市']
+  },
+  yAxis: {
+    type: 'value',
+    name: '平均年薪（万元）'
+  },
+  series: [
+    {
+      name: '2020',
+      type: 'bar',
+      data: [6.5, 17.5, 16.75],
+      itemStyle: {
+        color: '#ff7f50' // 设置柱状图颜色
+      },
+      label: {
+        show: true,
+        position: 'top' // 显示在柱的顶部
+      }
+    },
+    {
+      name: '2021',
+      type: 'bar',
+      data: [7.89, 18.06, 17.75],
+      itemStyle: {
+        color: '#87cefa' // 设置柱状图颜色
+      },
+      label: {
+        show: true,
+        position: 'top'
+      }
+    },
+    {
+      name: '2022',
+      type: 'bar',
+      data: [8.84, 19.23, 18.89],
+      itemStyle: {
+        color: '#32cd32' // 设置柱状图颜色
+      },
+      label: {
+        show: true,
+        position: 'top'
+      }
+    }
+  ]
+};
+
+// 使用刚指定的配置项和数据显示柱状图。
+barChart.setOption(barOption);
+
+
+      // 初始化饼状图容器
+      var pieChart = echarts.init(document.getElementById('pie-chart-container'));
+
+      // 饼状图配置
+      var pieOption = {
+        title: {
+          text: '昆明、北京和上海计算机行业年薪占比',
+          x: 'center'
+        },
+        series: [{
+          name: '年薪',
+          type: 'pie',
+          radius: '55%',
+          data: [
+              { value: 4.04, name: '北京市' },
+              { value: 2.07, name: '昆明市' },
+              { value: 3.89, name: '上海市' },
+          ]
+        }]
+      };
+
+      // 使用刚指定的配置项和数据显示饼状图。
+      pieChart.setOption(pieOption);
+
+    </script>
+
+</body>
+</html>

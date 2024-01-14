@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name = 'viewport' content = 'width=device-width, initial-scale=1.0, user-scalable=no' >
+        <meta charset = 'UTF-8' >
+        <style type = 'text/css'>
+            body {
+                background-color: white;
+            }
+            #table_content, #graph_content{
+                position: absolute;
+                display: flex;
+                top: 100px;
+                flex-direction: row;
+                justify-content: center;
+                overflow-x: scroll;
+                z-index: 0;
+            }
+            #table {
+                position: absolute;
+                left: 1px;
+                flex-direction: column;
+                height: 150px;
+            }
+            #table_body tr {
+                height: auto;
+            }
+            #menu {
+                position: absolute;
+                top: 60px;
+                z-index: 1;
+            }
+        </style>
+        <title>NULL</title>
+    </head>
+    <body>
+        <div id = 'menu'>
+            北京<input type = 'checkbox' checked id = 'beijing' >
+            /&nbsp;上海<input type = 'checkbox' checked id = 'shanghai' >
+            /&nbsp;昆明<input type = 'checkbox' checked id = 'kunming' >
+            /&nbsp;图表<input type = 'checkbox' id = 'graph' >
+            <span id = 'g_s'>/&nbsp;图表 - All</span><input type = 'checkbox' id = 'graph_all' >
+        </div>
+        <div id = 'table_content'>
+            <table border = '1' id = 'table'>
+                <thead style = 'position: static;'>
+                    <tr>
+                        <th>ID</th><th>岗位</th><th>公司</th><th>地区</th><th>薪水</th><th>详细地址</th><th>链接</th>
+                </thead>
+                <tbody id = 'table_body'>
+                </tbody>
+            </table>
+        </div>
+        <div id = "graph_content" ></div>
+    </body>
+    <script type = 'text/javascript' charset = 'UTF-8' src = 'static/echarts.min.js'></script>
+    <script type = 'text/javascript' charset = 'UTF-8'>
+        // JAVASCRIPT HERE
+        'use strict';
+        var xhr = new XMLHttpRequest();
+        let table = ret_ele('table_content');
+        var body_table = ret_ele('table_body');
+        var area = ['北京', '上海', '昆明'];
+        var beijing = ret_ele('beijing');
+        var shanghai = ret_ele('shanghai');
+        var kunming = ret_ele('kunming');
+        var graph = ret_ele('graph');
+        var graph_ = ret_ele('graph_content');
+        var graph_all = ret_ele('graph_all');
+        var g_s = ret_ele('g_s');
+        var menu = ret_ele('menu');
+        graph_.style.display = g_s.style.display = graph_all.style.display = 'none';
+        window.onresize = () => {
+            graph_.style.width = table.style.width = window.innerWidth * 0.8 + 'px';
+            graph_.style.height = table.style.height = window.innerHeight * 0.7 + 'px';
+            menu.style.left = table.style.left = (window.innerWidth / 2 - table.offsetWidth / 2) + 'px';
+        }
+        window.onresize();
+        var chart = echarts.init(graph_);
+
+
+        xhr.open("GET", "static/data.json", true);
+        xhr.onload = (event) => {
+            let data = window.JSON.parse(event.currentTarget.response).resultbody.job.items;
+            console.log(data);
+            reload(data);
+            beijing.onchange = () => {
+                let key = '北京';
+                if (beijing.checked)
+                    area.push(key);
+                else
+                    area.splice(area.indexOf(key), 1);
+                graph.checked ? graph_fn(data, area) : reload(data);
+            };
+            shanghai.onchange = () => {
+                let key = '上海';
+                if (shanghai.checked)
+                    area.push(key);
+                else
+                    area.splice(area.indexOf(key), 1);
+                graph.checked ? graph_fn(data, area) : reload(data);
+            };
+            kunming.onchange = () => {
+                let key = '昆明';
+                if (kunming.checked)
+                    area.push(key);
+                else
+                    area.splice(area.indexOf(key), 1);
+                graph.checked ? graph_fn(data, area) : reload(data);
+            };
+            graph.onchange = () => {
+                if (graph.checked)
+                {
+                    table.style.display = 'none';
+                    graph_.style.display = graph_all.style.display = g_s.style.display = 'inline';
+                    graph_fn(data, area);
+                } else {
+                    graph_.style.display = graph_all.style.display = g_s.style.display = 'none';
+                    table.style.display = 'inline';
+                }
+            };
+            graph_all.onchange = () => {
+                graph_fn(data, area);
+            }
+        };
+        xhr.send(null);
+
+        function graph_fn(data, area, rel = graph_all.checked)
+        {
+            let need = {};
+            if (area.length == 0)
+                area = ['北京', '上海', '昆明']
+            let area_set = new Set();
+            for (let i of data)
+                area_set.add(i.jobAreaString);
+            let area_arr = window.Array.from(area_set);
+            for (let i of data)
+            {
+                for (let j of area)
+                {
+                    if (rel)
+                    {
+                        for (let k of area_arr)
+                            if (i.jobAreaString.includes(j))
+                                if (i.jobAreaString == k)
+                                    typeof need[k] != 'undefined' ? need[k]++ : need[k] = 1;
+                    } else
+                        if (i.jobAreaString.includes(j))
+                            typeof need[j] != 'undefined' ? need[j]++ : need[j] = 1;
+                }
+            }
+            let _data = [];
+            for (let i of rel ? area_arr : area)
+                _data.push(need[i]);
+            chart.setOption({
+                xAxis: {
+                    type: 'category',
+                    data: rel ? area_arr : area,
+                    axisLabel: {
+                        show: true,
+                        interval: 0,
+                        width: 20,
+                        overflow: 'breakAll'
+                    }
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                tooltip: {
+                    show: true
+                },
+                series: [
+                    {
+                        name: '数量',
+                        data:_data,
+                        type: 'bar'
+                    }
+                ]
+            });
+        }
+
+        function reload(data)
+        {
+            body_table.innerHTML = '';
+            let need = [];
+            for (let i of area)
+            {
+                for (let j of data)
+                {
+                    if (j.jobAreaString.includes(i))
+                    {
+                        need.push(j);
+                    }
+                }
+            }
+            for (let i of need)
+            {
+                body_table.innerHTML+= '<tr><td>' + i.jobId + '</td><td>' + i.jobName + '</td><td>' + i.fullCompanyName + '</td><td>' + i.jobAreaString + '</td><td>' + i.provideSalaryString + '</td><td>' + i.jobAreaLevelDetail.provinceString + ' · ' + i.jobAreaLevelDetail.cityString + '</td><td><a href="' + i.jobHref + '">进入</a></td>';
+            }
+            return ;
+        }
+        function ret_ele(argu)
+        {
+            return window.document.getElementById(argu);
+        }
+    </script>
+</html>

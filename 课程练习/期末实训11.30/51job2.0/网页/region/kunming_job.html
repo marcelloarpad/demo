@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Job Listings</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #3498db;
+            color: #fff;
+            text-align: center;
+            padding: 1em 0;
+        }
+
+        nav {
+            background-color: #333;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        main {
+            margin: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            display: flex; /* 使用 Flex 布局 */
+        }
+
+        .job-photo {
+            width: 100px; /* 调整照片区域的宽度 */
+            margin-right: 20px; /* 为了与文本区域保持一些间距 */
+            overflow: hidden; /* 防止照片溢出 */
+        }
+
+        .job-photo img {
+            width: 100%; /* 让图片充满整个区域 */
+            border-radius: 5px; /* 图片圆角 */
+        }
+
+        .job-details {
+            flex: 1; /* 让文本区域占据剩余空间 */
+        }
+
+        h2, p {
+            margin: 0;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Your Job Listings</h1>
+    </header>
+
+    <nav>
+        <a href="http://localhost:63342/dome/%E6%9C%9F%E6%9C%AB%E5%AE%9E%E8%AE%AD11.30/%E7%BD%91%E9%A1%B5/region/secondary_home_region.html?_ijt=2ugerqs31kjbqkgn91i6nac52d&_ij_reload=RELOAD_ON_SAVE">返回上一页</a>
+    </nav>
+
+
+    <main>
+        <ul>
+            <!-- Job Listing Item -->
+                <script>
+                fetch('kunming.json')
+                    .then(response => response.json())
+                    .then(data => {
+                        var jobListContainer = document.querySelector('ul');
+
+                        // 遍历JSON数据并插入到HTML中
+                        for (var jobId in data) {
+                            if (data.hasOwnProperty(jobId)) {
+                                var job = data[jobId];
+                                var listItem = document.createElement('li');
+                                listItem.innerHTML = `
+                                    <div class="job-photo">
+                                        <img src="${job.companyloge}" alt="${job.name} Photo">
+                                    </div>
+                                    <div class="job-details">
+                                        <h2>${job.name}</h2>
+                                        <p>公司名称: ${job.companyname}</p>
+                                        <p>地址: ${job.region}</p>
+                                        <p>学历要求: ${job.welfare[1]}以上</p>
+                                        <p>福利和其他要求： ${job.welfare}</p>
+                                        <p>薪资待遇：${job.salary}</p>
+                                    </div>
+                                `;
+                                jobListContainer.appendChild(listItem);
+                            }
+                        }
+                    })
+                    .catch(error => console.error('Error fetching job data:', error));
+            </script>
+            <!-- Add more job listings as needed -->
+
+        </ul>
+    </main>
+</body>
+</html>

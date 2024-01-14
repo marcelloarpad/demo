@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>北京岗位多图表展示</title>
+  <!-- 引入 ECharts 库 -->
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.2.1/dist/echarts.min.js"></script>
+</head>
+
+    <body>
+
+    <!-- 柱状图容器 -->
+    <div id="bar-chart-container" style="width: 800px; height: 300px; float: left;"></div>
+
+    <!-- 饼状图容器 -->
+    <div id="pie-chart-container" style="width: 800px; height: 300px; float: left;"></div>
+
+    <script>
+// 初始化柱状图容器
+var barChart = echarts.init(document.getElementById('bar-chart-container'));
+
+// 柱状图配置
+var barOption = {
+  title: {
+    text: '昆明部分地区近三年it行业平均年薪',
+    x: 'center'
+  },
+  xAxis: {
+    type: 'category',
+    data: ['昆明高新技术产业开发区', '昆明综合保税区', '云南省数字经济开发区']
+  },
+  yAxis: {
+    type: 'value',
+    name: '平均年薪（万元）'
+  },
+  series: [
+    {
+      name: '2020',
+      type: 'bar',
+      data: [6.6, 5, 6],
+      itemStyle: {
+        color: '#ff7f50' // 设置柱状图颜色
+      },
+      label: {
+        show: true,
+        position: 'top' // 显示在柱的顶部
+      }
+    },
+    {
+      name: '2021',
+      type: 'bar',
+      data: [9.8, 9, 11.2],
+      itemStyle: {
+        color: '#87cefa' // 设置柱状图颜色
+      },
+      label: {
+        show: true,
+        position: 'top'
+      }
+    },
+    {
+      name: '2022',
+      type: 'bar',
+      data: [12.6, 12, 15.5],
+      itemStyle: {
+        color: '#32cd32' // 设置柱状图颜色
+      },
+      label: {
+        show: true,
+        position: 'top'
+      }
+    }
+  ]
+};
+
+// 使用刚指定的配置项和数据显示柱状图。
+barChart.setOption(barOption);
+
+
+      // 初始化饼状图容器
+      var pieChart = echarts.init(document.getElementById('pie-chart-container'));
+
+      // 饼状图配置
+      var pieOption = {
+        title: {
+          text: '昆明计算机行业年薪占比',
+          x: 'center'
+        },
+        series: [{
+          name: '年薪',
+          type: 'pie',
+          radius: '55%',
+          data: [
+              { value: 1.4, name: '软件类' },
+              { value: 1.5, name: '大数据类' },
+              { value: 2.1, name: '人工智能类' },
+              { value: 1.4, name: '网络类' },
+              { value: 1.2, name: '硬件类' },
+              { value: 1.1, name: '控制类' },
+              { value: 1.7, name: '应用系统开发类' },
+              { value: 1.5, name: '设计类' }
+          ]
+        }]
+      };
+
+      // 使用刚指定的配置项和数据显示饼状图。
+      pieChart.setOption(pieOption);
+
+    </script>
+
+</body>
+</html>
